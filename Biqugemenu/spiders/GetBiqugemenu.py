@@ -7,8 +7,8 @@ class GetbiqugemenuSpider(scrapy.Spider):
     name = 'GetBiqugemenu'
     allowed_domains = ['www.biquge.com.tw']
     start_urls = []
-    for i in range(1,3):
-        for j in range(i*1000,i*1000+10):
+    for i in range(1,20):
+        for j in range(i*1000,i*1000+1000):
             url = 'http://www.biquge.com.tw'+'/'+str(i)+'_'+str(j)
             print(url)
             start_urls.append(url)
