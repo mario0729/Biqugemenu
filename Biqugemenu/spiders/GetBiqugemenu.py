@@ -6,7 +6,12 @@ from Biqugemenu.items import bookinfoItem
 class GetbiqugemenuSpider(scrapy.Spider):
     name = 'GetBiqugemenu'
     allowed_domains = ['www.biquge.com.tw']
-    start_urls = ['http://www.biquge.com.tw/1_1000']
+    start_urls = []
+    for i in range(1,3):
+        for j in range(i*1000,i*1000+10):
+            url = 'http://www.biquge.com.tw'+'/'+str(i)+'_'+str(j)
+            print(url)
+            start_urls.append(url)
 
     def parse(self, response):
         item = bookinfoItem()
@@ -16,16 +21,8 @@ class GetbiqugemenuSpider(scrapy.Spider):
         item['bookintro'] = a.css('#intro p::text').extract_first()
         item['last_updatetime'] = a.css('p::text').extract()[4].strip('最后更新：')
         item['book_url'] = response.url
-        print(a)
         print(item)
         yield item
 
-        for i in range(1,3):
-            for j in range(i*1000,i*1000+10):
-                current_url = 'http://www.biquge.com.tw'+'/'+str(i)+'_'+str(j)
-                print(current_url)
-                if requests.get(current_url).status_code == 200:
-                    yield scrapy.Request(url = current_url,callback=self.parse)
-                else:
-                    print('NO!')
 
+    
