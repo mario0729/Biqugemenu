@@ -10,9 +10,10 @@ class GetbiqugemenuSpider(scrapy.Spider):
     for i in range(1,20):
         for j in range(i*1000,i*1000+1000):
             url = 'http://www.biquge.com.tw'+'/'+str(i)+'_'+str(j)
-            print(url)
-            start_urls.append(url)
+            #print(url)                 #输出url
+            start_urls.append(url)      #将有规律的urls存入start_urls供scrapy调用
 
+                
     def parse(self, response):
         item = bookinfoItem()
         a = response.css('#maininfo')
@@ -21,7 +22,7 @@ class GetbiqugemenuSpider(scrapy.Spider):
         item['bookintro'] = a.css('#intro p::text').extract_first()
         item['last_updatetime'] = a.css('p::text').extract()[4].strip('最后更新：')
         item['book_url'] = response.url
-        print(item)
+        #print(item)            #输出每个Item的值
         yield item
 
 
